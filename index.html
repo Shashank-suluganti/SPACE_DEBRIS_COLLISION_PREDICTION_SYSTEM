@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Debris Collision Predictor</title>
+    <!-- Google Fonts for Web App Guidelines -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>Space Debris Collision Prediction System</h1>
+        <p>Physics-aware ML system for debris collision risk prediction</p>
+    </header>
+
+    <section class="stats">
+        <div class="card glass">
+            <h3>Active Satellites</h3>
+            <p id="satCount">8,540</p>
+        </div>
+
+        <div class="card glass">
+            <h3>Tracked Debris</h3>
+            <p id="debrisCount">34,120</p>
+        </div>
+
+        <div class="card glass">
+            <h3>High Risk Events</h3>
+            <p id="riskEvents">142</p>
+        </div>
+    </section>
+
+    <div class="main-flex">
+
+        <!-- ORBIT SIDE -->
+        <div class="orbit-section glass">
+            <h2>Live Orbital Tracking</h2>
+            <div class="orbit-container">
+                <div class="earth"></div>
+                <div class="orbit orbit-1">
+                    <div class="satellite"></div>
+                </div>
+                <div class="orbit orbit-2">
+                    <div class="debris"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PREDICTION SIDE -->
+        <div class="prediction-box glass">
+            <section class="prediction">
+
+                <h2>Collision Prediction</h2>
+
+                <form id="predictionForm">
+                    <div class="form-grid">
+
+                        <div class="input-group">
+                            <label>Miss Distance (m)</label>
+                            <input type="number" id="distance" step="0.1" placeholder="e.g. 50">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Relative Velocity (km/s)</label>
+                            <input type="number" id="velocity" step="0.1" placeholder="e.g. 15">
+                        </div>
+
+                        <div class="input-group full-width">
+                            <label>Object Mass (kg)</label>
+                            <input type="number" id="mass" step="0.1" placeholder="e.g. 1500">
+                        </div>
+
+                    </div>
+
+                    <button type="submit" id="predictBtn">
+                        <span class="btn-text">Predict Risk</span>
+                        <div class="loader" style="display: none;"></div>
+                    </button>
+                </form>
+
+            </section>
+        </div>
+
+    </div>
+
+    <div class="bottom-flex">
+        <section class="results glass">
+            <h2>Prediction Results</h2>
+            <div class="result-stats">
+                <div class="res-item">
+                    <span>Collision Probability</span>
+                    <strong id="probability">--</strong>
+                </div>
+                <div class="res-item">
+                    <span>Risk Score</span>
+                    <strong id="riskScore">--</strong>
+                </div>
+                <div class="res-item">
+                    <span>Risk Level</span>
+                    <strong id="riskLevel" class="level-badge">--</strong>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="riskChart"></canvas>
+            </div>
+        </section>
+
+        <section class="dataset glass">
+            <h2>Batch Analysis</h2>
+            <p class="subtitle">Upload Conjunction Dataset (CSV)</p>
+            <div class="file-upload">
+                <label for="csvFile" class="custom-file-upload">
+                    Choose File
+                </label>
+                <input type="file" id="csvFile" accept=".csv">
+                <span id="fileName">No file chosen</span>
+            </div>
+            <button onclick="loadCSV()" class="secondary-btn">Load Dataset</button>
+        </section>
+    </div>
+
+    <div class="table-container glass">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Miss Distance (m)</th>
+                    <th>Velocity (km/s)</th>
+                    <th>Mass (kg)</th>
+                    <th>Calculated Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4" class="empty-state">Upload a dataset to view records.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
